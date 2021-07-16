@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strings"
 )
 
 // GetConnector - Returns a single connector
@@ -30,4 +31,35 @@ func (c *Client) GetConnector(connectorID string) (*Connector, error) {
 	}
 
 	return &connector, nil
+}
+
+// CreateConnector - Creates a new connector
+// Check https://www.elastic.co/guide/en/kibana/7.13/create-connector-api.html
+func (c *Client) CreateConnector(connector CreateConnector) (*Connector, error) {
+	rb, err := json.Marshal(connector)
+	if err != nil {
+		return nil, err
+	}
+
+	url := fmt.Sprintf("%s/s/%s/api/actions/connector", c.HostURL, c.Space)
+	log.Printf("Calling %s", url)
+	req, err := http.NewRequest("POST", url, strings.NewReader(string(rb)))
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("kbn-xsrf", "true")
+	req.Header.Set("content-type", "application/json")
+
+	body, err := c.doRequest(req)
+	if err != nil {
+		return nil, err
+	}
+
+	newConnector := Connector{}
+	err = json.Unmarshal(body, &newConnector)
+	if err != nil {
+		return nil, err
+	}
+
+	return &newConnector, nil
 }

@@ -16,3 +16,9 @@ type Connector struct {
 	IsMissingSecrets bool            `json:"is_missing_secrets"`
 	Config           ConnectorConfig `json:"config"`
 }
+
+type CreateConnector struct {
+	Name            string          `json:"name"`
+	ConnectorTypeId string          `json:"connector_type_id"`
+	Config          ConnectorConfig `json:"config"`
+}
