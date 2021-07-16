@@ -127,3 +127,24 @@ func TestUpdateConnector(t *testing.T) {
 
 	assert.Equal(t, updatedConnector.Name, "my-connector")
 }
+
+func TestDeleteConnector(t *testing.T) {
+	userName := "testUser"
+	password := "testPassword"
+	space := "testSpace"
+
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, "{}")
+	}))
+	defer ts.Close()
+
+	c, err := NewClient(&ts.URL, &userName, &password, &space)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = c.DeleteConnector("c55b6eb0-6bad-11eb-9f3b-611eebc6c3ad")
+	if err != nil {
+		log.Fatal(err)
+	}
+}

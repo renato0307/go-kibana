@@ -94,3 +94,22 @@ func (c *Client) UpdateConnector(connectorID string, connector UpdateConnector) 
 
 	return &updatedConnector, nil
 }
+
+// DeleteConnector - Deletes an connector by ID. When you delete a connector, it cannot be recovered.
+// Check https://www.elastic.co/guide/en/kibana/7.13/delete-connector-api.html
+func (c *Client) DeleteConnector(connectorID string) error {
+	url := fmt.Sprintf("%s/s/%s/api/actions/connector/%s", c.HostURL, c.Space, connectorID)
+	log.Printf("Calling %s", url)
+	req, err := http.NewRequest("DELETE", url, nil)
+	if err != nil {
+		return err
+	}
+	req.Header.Set("kbn-xsrf", "true")
+
+	_, err = c.doRequest(req)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
