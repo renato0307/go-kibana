@@ -1,7 +1,5 @@
 package kibana
 
-// From https://www.elastic.co/guide/en/kibana/7.13/get-connector-api.html
-
 type ConnectorConfig struct {
 	Index              string `json:"index"`
 	Refresh            bool   `json:"refresh"`
