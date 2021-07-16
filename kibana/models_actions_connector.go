@@ -22,3 +22,8 @@ type CreateConnector struct {
 	ConnectorTypeId string          `json:"connector_type_id"`
 	Config          ConnectorConfig `json:"config"`
 }
+
+type UpdateConnector struct {
+	Name   string          `json:"name"`
+	Config ConnectorConfig `json:"config"`
+}

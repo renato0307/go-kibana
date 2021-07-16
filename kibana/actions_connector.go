@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-// GetConnector - Returns a single connector
+// GetConnector - Retrieves a connector by ID.
 // Check https://www.elastic.co/guide/en/kibana/7.13/get-connector-api.html
 func (c *Client) GetConnector(connectorID string) (*Connector, error) {
 	url := fmt.Sprintf("%s/s/%s/api/actions/connector/%s", c.HostURL, c.Space, connectorID)
@@ -33,7 +33,7 @@ func (c *Client) GetConnector(connectorID string) (*Connector, error) {
 	return &connector, nil
 }
 
-// CreateConnector - Creates a new connector
+// CreateConnector - Creates a connector.
 // Check https://www.elastic.co/guide/en/kibana/7.13/create-connector-api.html
 func (c *Client) CreateConnector(connector CreateConnector) (*Connector, error) {
 	rb, err := json.Marshal(connector)
@@ -62,4 +62,35 @@ func (c *Client) CreateConnector(connector CreateConnector) (*Connector, error) 
 	}
 
 	return &newConnector, nil
+}
+
+// UpdateConnector - Updates the attributes for an existing connector.
+// Check https://www.elastic.co/guide/en/kibana/7.13/update-connector-api.html
+func (c *Client) UpdateConnector(connectorID string, connector UpdateConnector) (*Connector, error) {
+	rb, err := json.Marshal(connector)
+	if err != nil {
+		return nil, err
+	}
+
+	url := fmt.Sprintf("%s/s/%s/api/actions/connector/%s", c.HostURL, c.Space, connectorID)
+	log.Printf("Calling %s", url)
+	req, err := http.NewRequest("PUT", url, strings.NewReader(string(rb)))
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("kbn-xsrf", "true")
+	req.Header.Set("content-type", "application/json")
+
+	body, err := c.doRequest(req)
+	if err != nil {
+		return nil, err
+	}
+
+	updatedConnector := Connector{}
+	err = json.Unmarshal(body, &updatedConnector)
+	if err != nil {
+		return nil, err
+	}
+
+	return &updatedConnector, nil
 }
