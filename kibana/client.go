@@ -10,7 +10,7 @@ import (
 // HostURL - Default Kibana URL
 const HostURL string = "http://localhost:5601"
 
-// Client -
+// Client - The client to call Kibana APIs
 type Client struct {
 	HostURL    string
 	HTTPClient *http.Client
@@ -19,7 +19,7 @@ type Client struct {
 	Space      string
 }
 
-// NewClient -
+// NewClient - Create a new client to call Kibana APIs
 func NewClient(host, username, password, space *string) (*Client, error) {
 	c := Client{
 		HTTPClient: &http.Client{Timeout: 10 * time.Second},
