@@ -1,12 +1,14 @@
 package kibana
 
 type RuleParams struct {
-	AggField            string   `json:"aggField"`
-	AggType             string   `json:"aggType"`
-	GroupBy             string   `json:"groupBy"`
+	AggField            string   `json:"aggField,omitempty"`
+	AggType             string   `json:"aggType,omitempty"`
+	ESQuery             string   `json:"esQuery"`
+	GroupBy             string   `json:"groupBy,omitempty"`
 	Index               []string `json:"index"`
-	TermField           string   `json:"termField"`
-	TermSize            int      `json:"termSize"`
+	Size                int      `json:"size"`
+	TermField           string   `json:"termField,omitempty"`
+	TermSize            int      `json:"termSize,omitempty"`
 	Threshold           []int    `json:"threshold"`
 	ThresholdComparator string   `json:"thresholdComparator"`
 	TimeField           string   `json:"timeField"`
@@ -19,9 +21,9 @@ type RuleSchedule struct {
 }
 
 type RuleAction struct {
-	ID     string                  `json:"id"`
-	Group  string                  `json:"group"`
-	Params map[string]*interface{} `json:"params"`
+	ID     string                 `json:"id"`
+	Group  string                 `json:"group"`
+	Params map[string]interface{} `json:"params"`
 }
 
 type RuleExecutionStatus struct {
