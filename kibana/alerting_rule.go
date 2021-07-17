@@ -65,3 +65,23 @@ func (c *Client) CreateRule(rule CreateRule) (*Rule, error) {
 
 	return &newRule, nil
 }
+
+// DeleteRule - Permanently remove a rule. Once you delete a rule, you cannot recover it.
+// Check https://www.elastic.co/guide/en/kibana/7.13/delete-rule-api.html
+func (c *Client) DeleteRule(ruleID string) error {
+	url := fmt.Sprintf("%s/s/%s/api/alerting/rule/%s", c.HostURL, c.Space, ruleID)
+	log.Printf("Deleting rule using %s", url)
+
+	req, err := http.NewRequest("DELETE", url, nil)
+	if err != nil {
+		return err
+	}
+	req.Header.Set("kbn-xsrf", "true")
+
+	_, err = c.doRequest(req)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
