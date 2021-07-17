@@ -1,4 +1,4 @@
-module github.com/renato0307/kibana
+module github.com/renato0307/go-kibana
 
 go 1.16
 
