@@ -41,8 +41,10 @@ func (c *Client) CreateConnector(connector CreateConnector) (*Connector, error) 
 		return nil, err
 	}
 
+	log.Printf("Creating connector %s", string(rb))
+
 	url := fmt.Sprintf("%s/s/%s/api/actions/connector", c.HostURL, c.Space)
-	log.Printf("Calling %s", url)
+	log.Printf("Creating connector using URL %s", url)
 	req, err := http.NewRequest("POST", url, strings.NewReader(string(rb)))
 	if err != nil {
 		return nil, err
