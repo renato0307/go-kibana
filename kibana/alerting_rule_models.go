@@ -47,7 +47,6 @@ type UpdateRule struct {
 	Name       string       `json:"name"`
 	NotifyWhen string       `json:"notify_when"`
 	Params     RuleParams   `json:"params"`
-	RuleTypeID string       `json:"rule_type_id"`
 	Schedule   RuleSchedule `json:"schedule"`
 	Tags       []string     `json:"tags"`
 	Throttle   string       `json:"throttle"`
