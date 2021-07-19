@@ -3,17 +3,17 @@ package kibana
 type RuleParams struct {
 	AggField            string   `json:"aggField,omitempty"`
 	AggType             string   `json:"aggType,omitempty"`
-	ESQuery             string   `json:"esQuery"`
+	ESQuery             string   `json:"esQuery,omitempty"`
 	GroupBy             string   `json:"groupBy,omitempty"`
-	Index               []string `json:"index"`
-	Size                int      `json:"size"`
+	Index               []string `json:"index,omitempty"`
+	Size                int      `json:"size,omitempty"`
 	TermField           string   `json:"termField,omitempty"`
 	TermSize            int      `json:"termSize,omitempty"`
-	Threshold           []int    `json:"threshold"`
+	Threshold           []int    `json:"threshold,omitempty"`
 	ThresholdComparator string   `json:"thresholdComparator"`
-	TimeField           string   `json:"timeField"`
-	TimeWindowSize      int      `json:"timeWindowSize"`
-	TimeWindowUnit      string   `json:"timeWindowUnit"`
+	TimeField           string   `json:"timeField,omitempty"`
+	TimeWindowSize      int      `json:"timeWindowSize,omitempty"`
+	TimeWindowUnit      string   `json:"timeWindowUnit,omitempty"`
 }
 
 type RuleSchedule struct {
@@ -49,7 +49,7 @@ type UpdateRule struct {
 	Params     RuleParams   `json:"params"`
 	Schedule   RuleSchedule `json:"schedule"`
 	Tags       []string     `json:"tags"`
-	Throttle   string       `json:"throttle"`
+	Throttle   string       `json:"throttle,omitempty"`
 }
 
 type Rule struct {
