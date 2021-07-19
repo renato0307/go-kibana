@@ -72,9 +72,9 @@ func TestCreateConnector(t *testing.T) {
 	connector := CreateConnector{
 		Name:            "my-connector",
 		ConnectorTypeId: ".index",
-		Config: ConnectorConfig{
-			Index:   "test-index",
-			Refresh: true,
+		Config: map[string]interface{}{
+			"index":   "test-index",
+			"refresh": true,
 		},
 	}
 	newConnector, err := c.CreateConnector(connector)
@@ -114,8 +114,9 @@ func TestUpdateConnector(t *testing.T) {
 
 	connector := UpdateConnector{
 		Name: "my-connector",
-		Config: ConnectorConfig{
-			Index: "test-index",
+		Config: map[string]interface{}{
+			"index":   "test-index",
+			"refresh": true,
 		},
 	}
 	updatedConnector, err := c.UpdateConnector("c55b6eb0-6bad-11eb-9f3b-611eebc6c3ad", connector)
